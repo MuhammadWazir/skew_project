@@ -3,6 +3,9 @@ from dependency_injector.wiring import inject, Provide
 from fastapi import UploadFile, File, Path, Depends
 from src.containers import Container
 from src.application.dtos.upload_file_dto import UploadFileDTO
+from src.application.dtos.search_chunk_dto import SearchChunkDTO
+
+
 knowledge_router = APIRouter(prefix="/knowledge", tags=["knowledge"])
 
 
@@ -15,10 +18,18 @@ def upload_document(
     file_data = UploadFileDTO(filename= document.filename, file= document.file.read())
     return upload_file_use_case.execute(file_data)
 
-@knowledge_router.delete("/files/{file_id}")
+@knowledge_router.delete("/{file_id}")
 @inject
 def delete_document(
     file_id: str = Path(..., description="ID of the file to delete"),
     file_delete_use_case: "FileDeleteUseCase" = Depends(Provide[Container.file_delete_use_case])
 ):
     return file_delete_use_case.execute(file_id)
+
+@knowledge_router.post("/search")
+@inject
+def search_chunks(
+    request: SearchChunkDTO,
+    search_chunks_use_case: "SearchChunksUseCase" = Depends(Provide[Container.search_chunks_use_case])
+):  
+    return search_chunks_use_case.execute(request)

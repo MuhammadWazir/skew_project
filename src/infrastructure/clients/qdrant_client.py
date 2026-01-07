@@ -48,25 +48,20 @@ class QdrantClientWrapper(AbstractQdrantClient):
 
     def search_chunks(
         self,
-        query_embedding: list,
-        top_k: int = 5,
-        collections: Optional[List[str]] = None
+        query_embedding: list
     ) -> List[ChunkDataEntity]:
         try:
             results = []
-            if collections is None:
-                collections_response = self.client.get_collections()
-                target_collections = [c.name for c in collections_response.collections]
-            else:
-                target_collections = collections
+            collections_response = self.client.get_collections()
+            collection_names = [col.name for col in collections_response.collections]
 
-            for col in target_collections:
-                res = self.client.search(
-                    collection_name=col,
-                    query_vector=query_embedding,
-                    limit=top_k
+            for collection_name in collection_names:
+                search_results = self.client.query_points(
+                    collection_name=collection_name,
+                    query=query_embedding,
+                    limit=5
                 )
-                for hit in res:
+                for hit in search_results.points:
                     results.append(ChunkDataEntity(
                         filename=hit.payload.get("filename"),
                         chunk_index=hit.payload.get("chunk_index"),

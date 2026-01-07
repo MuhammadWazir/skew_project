@@ -3,7 +3,7 @@ from src.infrastructure.clients.openai_client import OpenAIClient
 from src.infrastructure.clients.qdrant_client import QdrantClientWrapper
 from src.application.use_cases.knowledge.file_upload_use_case import FileUploadUseCase
 from src.application.use_cases.knowledge.file_delete_use_case import FileDeleteUseCase
-
+from src.application.use_cases.knowledge.search_chunks_use_case import SearchChunksUseCase
 
 class Container(containers.DeclarativeContainer):
 
@@ -13,3 +13,4 @@ class Container(containers.DeclarativeContainer):
     qdrant_client = providers.Singleton(QdrantClientWrapper)
     file_upload_use_case = providers.Factory(FileUploadUseCase, openai_client=openai_client, qdrant_client=qdrant_client)
     file_delete_use_case = providers.Factory(FileDeleteUseCase, qdrant_client=qdrant_client)
+    search_chunks_use_case = providers.Factory(SearchChunksUseCase, qdrant_client=qdrant_client, openai_client=openai_client)
