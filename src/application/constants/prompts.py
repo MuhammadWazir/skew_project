@@ -1,3 +1,5 @@
+"""Constants for chat prompts"""
+
 BRAIN_PROMPT = """You are a decision-making assistant. Your task is to determine if a user's query requires retrieval-augmented generation (RAG) to answer accurately.
 
 A query needs RAG if it:
@@ -24,3 +26,4 @@ Instructions:
 - Be concise but thorough
 
 Response:"""
+

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.presentation.routers.knowledge_router import knowledge_router
+from src.presentation.routers.chat_router import chat_router
 from src.containers import Container
 
 
@@ -20,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(knowledge_router)
+app.include_router(chat_router)
 
 @app.get("/")
 async def root():
