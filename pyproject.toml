@@ -1,5 +1,5 @@
 [project]
-name = "web-scraper-voice-agent"
+name = "chat-pdf-agent"
 version = "0.1.0"
 description = "A web scraper with voice agent capabilities"
 authors = [
