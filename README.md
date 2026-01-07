@@ -47,7 +47,7 @@ Once the service is running, access:
 ## Key Implementation Details
 
 ### PDF Processing
-- Extracts text using PyMuPDF with proper encoding handling
+- Extracts text using PDFPlumber
 - Cleans text by removing excessive whitespace and special characters
 - Chunks text into 512 tokens with 128 tokens overlap
 
